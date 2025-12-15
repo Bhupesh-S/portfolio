@@ -109,6 +109,13 @@
   height: 100%;
 }
 
+@media (max-width: 1024px) {
+  .skillsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+  }
+}
+
 @media (max-width: 768px) {
   .skills {
     padding: var(--spacing-xl) var(--spacing-md);

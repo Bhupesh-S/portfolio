@@ -6,25 +6,25 @@ const Achievements = () => {
       title: "HackBuzz'25 Winner",
       organization: "Kongu Engineering College",
       year: "2025",
-      description: "Second place in 24-hour Hackathon. We built an AI-powered Smart Agriculture platform that predicts crop prices, assesses produce quality, and digitizes the farm-to-market workflow using a secure MERN-based system."
+      description: "Secured second place in the department-level 24-hour HackBuzz Hackathon conducted at Kongu Engineering College. "
     },
     {
       title: "Algo Arena Winner",
       organization: "Kongu Engineering College",
       year: "2025",
-      description: "It is an internal 24 hour internal hackathon to shortlist for Smart India Hackathon. Secured Second place by developing 'SevaTrack' is a digital governance platform that streamlines public service requests with transparent tracking, role-based access, and real-time status updates for citizens and officials."
+      description: "Achieved second place in the 24-hour Algo Arena internal hackathon, organized as part of the Smart India Hackathon shortlisting process at Kongu Engineering College."
     },
     {
       title: "Smart India Hackathon Finalist",
       organization: "Smart India Hackathon",
       year: "2025",
-      description: "Finalist in Smart India Hackathon 2025 for developing 'FarmStellar' is a gamified smart-farming platform that guides farmers through practical, step-by-step agricultural tasks using AI verification, rewards, and real-world impact tracking."
+      description: "Selected as a finalist in Smart India Hackathon, competing among top teams at the national level."
     },
     {
       title: "Java SE 17 Developer Certified",
       organization: "Oracle",
       year: "2025",
-      description: "Java SE 17 Developer certification"
+      description: "Earned the Oracle Java SE 17 Developer Certification, demonstrating proficiency in modern Java programming standards."
     }
   ];
 

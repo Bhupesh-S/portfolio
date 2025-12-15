@@ -11,7 +11,7 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <div className={styles.logo}>Portfolio</div>
+        <div className={styles.logo}>Bhupesh Santha Kumar</div>
         <nav className={styles.nav}>
           <button onClick={() => scrollToSection('home')} className={styles.navLink}>
             Home

@@ -22,7 +22,7 @@ const Contact = () => {
     {
       type: 'Email',
       value: 'bhupeegayu24@gmail.com',
-      link: 'mailto:bhupeegayu24@gmail.com',
+      link: 'https://mail.google.com/mail/?view=cm&fs=1&to=bhupeegayu24@gmail.com',
       ariaLabel: 'Send email to Bhupesh Santha Kumar'
     },
     {
@@ -54,7 +54,7 @@ const Contact = () => {
               <span className={styles.contactType}>{type}</span>
               <a 
                 href={link} 
-                target="_blank" 
+                target="_blank"
                 rel="noopener noreferrer"
                 className={styles.contactLink}
                 aria-label={ariaLabel}

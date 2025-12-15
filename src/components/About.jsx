@@ -6,10 +6,7 @@ const About = () => {
       <div className={styles.container}>
         <h2 className={styles.title}>About Me</h2>
         <p className={styles.bio}>
-          I'm a Full Stack Developer with 5+ years of experience building web applications 
-          from concept to deployment. I thrive in collaborative environments and enjoy solving 
-          complex problems with elegant, efficient solutions. My approach combines technical 
-          expertise with a strong focus on code quality, performance optimization, and user-centered design.
+          I'm a full-stack web developer with end-to-end development capabilities, right from designing to deploying web apps. I'm a team player and enjoy working with complex problem-solving and designing efficient solutions with a focus on performance and usability.
         </p>
       </div>
     </section>

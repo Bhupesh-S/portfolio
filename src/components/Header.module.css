@@ -60,11 +60,30 @@
 }
 
 @media (max-width: 480px) {
+  .container {
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .logo {
+    font-size: 1.1rem;
+  }
+
   .nav {
-    gap: var(--spacing-sm);
+    gap: var(--spacing-xs);
   }
   
   .navLink {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
+    padding: var(--spacing-xs) 0;
+  }
+}
+
+@media (max-width: 360px) {
+  .logo {
+    font-size: 1rem;
+  }
+
+  .navLink {
+    font-size: 0.7rem;
   }
 }

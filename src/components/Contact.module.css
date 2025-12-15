@@ -89,6 +89,12 @@
   background-color: rgb(23, 27, 33);
 }
 
+@media (max-width: 1024px) {
+  .contactItem {
+    min-width: 250px;
+  }
+}
+
 @media (max-width: 768px) {
   .contact {
     padding: var(--spacing-xl) var(--spacing-md);
@@ -110,5 +116,7 @@
   
   .contactItem {
     min-width: auto;
+    width: 100%;
+    max-width: 300px;
   }
 }
