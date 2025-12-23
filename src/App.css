@@ -7,3 +7,9 @@
 main {
   flex: 1;
 }
+
+.section-divider {
+  height: 1px;
+  background-color: rgba(48, 54, 61, 0.5);
+  margin: 0;
+}

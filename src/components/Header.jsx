@@ -1,10 +1,21 @@
+import { useState } from 'react';
 import styles from './Header.module.css';
 
 const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const headerHeight = 80; // Increased offset for better visibility
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - headerHeight;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+      setIsMenuOpen(false); // Close menu after navigation
     }
   };
 
@@ -12,7 +23,20 @@ const Header = () => {
     <header className={styles.header}>
       <div className={styles.container}>
         <div className={styles.logo}>Bhupesh Santha Kumar</div>
-        <nav className={styles.nav}>
+        
+        {/* Hamburger button for mobile */}
+        <button 
+          className={styles.hamburger} 
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          <span className={`${styles.hamburgerLine} ${isMenuOpen ? styles.open : ''}`}></span>
+          <span className={`${styles.hamburgerLine} ${isMenuOpen ? styles.open : ''}`}></span>
+          <span className={`${styles.hamburgerLine} ${isMenuOpen ? styles.open : ''}`}></span>
+        </button>
+
+        {/* Navigation */}
+        <nav className={`${styles.nav} ${isMenuOpen ? styles.navOpen : ''}`}>
           <button onClick={() => scrollToSection('home')} className={styles.navLink}>
             Home
           </button>

@@ -1,6 +1,17 @@
+import { motion, useReducedMotion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 import styles from './Contact.module.css';
 
 const Contact = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   const icons = {
     Email: (
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -39,32 +50,86 @@ const Contact = () => {
     }
   ];
 
+  // Animation variants - medium for desktop, simple for mobile
+  const containerVariants = {
+    hidden: { opacity: 0, y: isMobile ? 20 : 60 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: isMobile ? 0.3 : 0.6,
+        ease: 'easeOut',
+        staggerChildren: isMobile ? 0.08 : 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: isMobile ? 10 : 25 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: isMobile ? 0.3 : 0.5, ease: 'easeOut' }
+    }
+  };
+
+  const contactItemVariants = {
+    hidden: { opacity: 0, x: isMobile ? -10 : -25 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: isMobile ? 0.3 : 0.5, ease: 'easeOut' }
+    }
+  };
+
   return (
     <section id="contact" className={styles.contact}>
-      <div className={styles.container}>
-        <h2 className={styles.title}>Get In Touch</h2>
-        <p className={styles.description}>
+      {/* Scroll-triggered container */}
+      <motion.div
+        className={styles.container}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-100px' }}
+        variants={containerVariants}
+      >
+        <motion.h2 className={styles.title} variants={itemVariants}>
+          Get In Touch
+        </motion.h2>
+        <motion.p className={styles.description} variants={itemVariants}>
           I'm always open to discussing new projects, opportunities, or collaborations. 
           Feel free to reach out!
-        </p>
+        </motion.p>
         <div className={styles.contactList}>
           {contactInfo.map(({ type, value, link, ariaLabel }) => (
-            <div key={type} className={styles.contactItem}>
+            /* Contact item with hover and tap animations */
+            
+            <motion.div
+              key={type}
+              className={styles.contactItem}
+              variants={contactItemVariants}
+              whileHover={!prefersReducedMotion ? { x: isMobile ? 4 : 10, scale: isMobile ? 1.01 : 1.03 } : {}}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: isMobile ? 0.15 : 0.25, ease: 'easeOut' }}
+            >
               <span className={styles.contactIcon}>{icons[type]}</span>
               <span className={styles.contactType}>{type}</span>
-              <a 
+              {/* Link with subtle scale animation */}
+              <motion.a 
                 href={link} 
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.contactLink}
                 aria-label={ariaLabel}
+                whileHover={!prefersReducedMotion ? { scale: isMobile ? 1.02 : 1.06 } : {}}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: isMobile ? 0.15 : 0.25, ease: 'easeOut' }}
               >
                 {value}
-              </a>
-            </div>
+              </motion.a>
+            </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

@@ -1,6 +1,17 @@
+import { motion, useReducedMotion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 import styles from './Projects.module.css';
 
 const Projects = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   const projects = [
   {
     id: 1,
@@ -72,14 +83,54 @@ const Projects = () => {
   }
 ];
 
+  // Animation variants - medium for desktop, simple for mobile
+  const containerVariants = {
+    hidden: { opacity: 0, y: isMobile ? 20 : 60 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: isMobile ? 0.3 : 0.6,
+        ease: 'easeOut',
+        staggerChildren: isMobile ? 0.08 : 0.2
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: isMobile ? 15 : 35 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: isMobile ? 0.3 : 0.5, ease: 'easeOut' }
+    }
+  };
+
 
   return (
     <section id="projects" className={styles.projects}>
-      <div className={styles.container}>
-        <h2 className={styles.title}>Projects</h2>
+      {/* Scroll-triggered container */}
+      <motion.div
+        className={styles.container}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-100px' }}
+        variants={containerVariants}
+      >
+        <motion.h2 className={styles.title} variants={cardVariants}>
+          Projects
+        </motion.h2>
         <div className={styles.projectGrid}>
           {projects.map((project) => (
-            <article key={project.id} className={styles.projectCard}>
+            /* Project card with hover and tap animations */
+            <motion.article
+              key={project.id}
+              className={styles.projectCard}
+              variants={cardVariants}
+              whileHover={!prefersReducedMotion ? { y: isMobile ? -3 : -10, scale: isMobile ? 1.01 : 1.03 } : {}}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: isMobile ? 0.2 : 0.35, ease: 'easeOut' }}
+            >
               <h3 className={styles.projectTitle}>{project.title}</h3>
               <p className={styles.projectDescription}>{project.description}</p>
               
@@ -90,21 +141,25 @@ const Projects = () => {
               </div>
               
               <div className={styles.projectLinks}>
-                <a 
+                {/* Link with hover/tap micro-interaction */}
+                <motion.a 
                   href={project.github} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className={styles.projectLink}
                   aria-label={`View ${project.title} on GitHub`}
+                  whileHover={!prefersReducedMotion ? { scale: isMobile ? 1.02 : 1.06 } : {}}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ duration: isMobile ? 0.15 : 0.25, ease: 'easeOut' }}
                 >
                   GitHub
-                </a>
+                </motion.a>
                 
               </div>
-            </article>
+            </motion.article>
           ))}
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

@@ -1,6 +1,6 @@
 .contact {
   padding: var(--spacing-2xl) var(--spacing-lg);
-  background-color: var(--color-bg);
+  background-color: #171b21 !important;
 }
 
 .container {

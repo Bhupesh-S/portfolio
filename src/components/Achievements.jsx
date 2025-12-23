@@ -1,6 +1,17 @@
+import { motion, useReducedMotion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 import styles from './Achievements.module.css';
 
 const Achievements = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   const achievements = [
     {
       title: "HackBuzz'25 Winner",
@@ -28,13 +39,53 @@ const Achievements = () => {
     }
   ];
 
+  // Animation variants - medium for desktop, simple for mobile
+  const containerVariants = {
+    hidden: { opacity: 0, y: isMobile ? 20 : 60 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: isMobile ? 0.3 : 0.6,
+        ease: 'easeOut',
+        staggerChildren: isMobile ? 0.08 : 0.2
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: isMobile ? 15 : 35 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: isMobile ? 0.3 : 0.5, ease: 'easeOut' }
+    }
+  };
+
   return (
     <section id="achievements" className={styles.achievements}>
-      <div className={styles.container}>
-        <h2 className={styles.title}>Achievements</h2>
+      {/* Scroll-triggered container */}
+      <motion.div
+        className={styles.container}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-100px' }}
+        variants={containerVariants}
+      >
+        <motion.h2 className={styles.title} variants={cardVariants}>
+          Achievements
+        </motion.h2>
         <div className={styles.achievementsGrid}>
           {achievements.map((achievement, index) => (
-            <div key={index} className={styles.achievementCard}>
+            /* Achievement card with hover and tap animations */
+            <motion.div
+              key={index}
+              className={styles.achievementCard}
+              variants={cardVariants}
+              whileHover={!prefersReducedMotion ? { y: isMobile ? -3 : -10, scale: isMobile ? 1.01 : 1.03 } : {}}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: isMobile ? 0.2 : 0.35, ease: 'easeOut' }}
+            >
               <div className={styles.cardHeader}>
                 <div className={styles.iconContainer}>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -47,10 +98,10 @@ const Achievements = () => {
               <h3 className={styles.achievementTitle}>{achievement.title}</h3>
               <p className={styles.organization}>{achievement.organization}</p>
               <p className={styles.description}>{achievement.description}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
